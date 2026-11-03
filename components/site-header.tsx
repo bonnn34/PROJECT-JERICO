@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowUpRight, Menu, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { profile } from "@/data/portfolio";
 import { ProjectJericoWordmark } from "@/components/project-jerico-logo";
 import { ThemeControl } from "@/components/theme-control";
@@ -18,11 +18,17 @@ export function SiteHeader() {
   const [isOpen, setOpen] = useState(false);
   const pathname = usePathname();
   useEffect(() => setOpen(false), [pathname]);
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const scrollbarWidth = isOpen ? window.innerWidth - document.documentElement.clientWidth : 0;
+    document.body.style.setProperty("--scrollbar-compensation", `${scrollbarWidth}px`);
     document.body.classList.toggle("nav-open", isOpen);
     const onKeyDown = (event: KeyboardEvent) => event.key === "Escape" && setOpen(false);
     document.addEventListener("keydown", onKeyDown);
-    return () => { document.body.classList.remove("nav-open"); document.removeEventListener("keydown", onKeyDown); };
+    return () => {
+      document.body.classList.remove("nav-open");
+      document.body.style.removeProperty("--scrollbar-compensation");
+      document.removeEventListener("keydown", onKeyDown);
+    };
   }, [isOpen]);
   return (
     <header className="site-header">

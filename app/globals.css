@@ -57,7 +57,7 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 74px; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body { margin: 0; overflow-x: hidden; overflow-x: clip; color: var(--ink); background-color: var(--paper); background-image: linear-gradient(var(--line-soft) 1px, transparent 1px), linear-gradient(90deg, var(--line-soft) 1px, transparent 1px); background-size: var(--grid-size) var(--grid-size); font-family: var(--sans); font-size: 15px; -webkit-font-smoothing: antialiased; }
-body.nav-open { overflow: hidden; }
+body.nav-open { overflow: hidden; padding-right: var(--scrollbar-compensation, 0px); }
 ::selection { color: var(--selection-fg); background: var(--selection-bg); }
 a { color: inherit; text-decoration: none; }
 button { color: inherit; font: inherit; }
@@ -162,7 +162,8 @@ body.preloader-lock { overflow: hidden; }
 .header-location { display: flex; align-items: center; gap: 8px; margin-right: 8px; color: var(--muted); font: 700 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
 .header-location i, .status-pill i, .hero-bottom-rail i { width: 7px; height: 7px; display: inline-block; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 3px rgba(21,155,104,.12); }
 .header-resume, .menu-toggle { min-height: 40px; border: 1px solid var(--line); border-radius: 999px; background: transparent; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 15px; font: 700 10px var(--mono); letter-spacing: .08em; cursor: pointer; transition: color .25s ease, background-color .25s ease, border-color .25s ease; }
-.menu-toggle { min-width: 86px; }
+.menu-toggle { width: 96px; min-width: 96px; flex: 0 0 96px; padding-inline: 13px; }
+.menu-toggle > span { width: 34px; text-align: center; }
 .header-resume:hover, .menu-toggle:hover { background: var(--active-bg); color: var(--active-fg); }
 .header-resume svg, .menu-toggle svg { transition: transform .25s ease; }
 .header-resume:hover svg { transform: translate(2px, -2px); }
@@ -525,7 +526,7 @@ body.preloader-lock { overflow: hidden; }
   .shell { width: calc(100% - 28px); }
   .header-resume { display: none; }
   .header-brand-lockup { --pj-mark-size: 26px; --pj-type-size: 9px; gap: 6px; }
-  .menu-toggle { min-width: 76px; }
+  .menu-toggle { width: 92px; min-width: 92px; flex-basis: 92px; padding-inline: 11px; }
   .site-menu-inner { width: 100%; padding-top: 24px; padding-bottom: 34px; }
   .site-menu a { grid-template-columns: 30px 1fr auto; padding: 14px 0; font-size: 28px; }
   .hero-role-block { padding: 38px 0 24px; }
