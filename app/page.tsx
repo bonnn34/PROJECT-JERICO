@@ -87,7 +87,13 @@ export default function HomePage() {
             <div className="contact-bottom">
               <p>GOOD PROJECTS START WITH<br />A CLEAR CONVERSATION.</p>
               {profile.email ? <a className="contact-email" href={`mailto:${profile.email}?subject=Let's%20work%20together`}>{profile.email}<ArrowUpRight size={24} /></a> : <span className="contact-pending">CONTACT DETAILS COMING SOON</span>}
-              <div className="socials">{profile.github && <a href={profile.github} target="_blank" rel="noopener noreferrer">GITHUB ↗</a>}{profile.linkedin && <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LINKEDIN ↗</a>}<Link href="/resume">RESUME ↗</Link></div>
+              <div className="socials">
+                {profile.github && <a href={profile.github} target="_blank" rel="noopener noreferrer">GITHUB ↗</a>}
+                {profile.behance && <a href={profile.behance} target="_blank" rel="noopener noreferrer">BEHANCE ↗</a>}
+                {profile.facebook && <a href={profile.facebook} target="_blank" rel="noopener noreferrer">FACEBOOK ↗</a>}
+                {profile.linkedin && <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LINKEDIN ↗</a>}
+                <Link href="/resume">RESUME ↗</Link>
+              </div>
             </div>
           </div>
         </section>

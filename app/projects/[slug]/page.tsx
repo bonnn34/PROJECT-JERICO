@@ -18,7 +18,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const project = projects.find((item) => item.slug === slug);
   if (!project) return { title: "Project not found" };
-  return { title: project.title, description: project.overview };
+  const canonical = `/projects/${project.slug}`;
+  return {
+    title: project.title,
+    description: project.overview,
+    alternates: { canonical },
+    openGraph: {
+      type: "article",
+      url: canonical,
+      title: `${project.title} | ${profile.name}`,
+      description: project.overview,
+      images: [{ url: project.image, alt: project.imageAlt }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} | ${profile.name}`,
+      description: project.overview,
+      images: [project.image],
+    },
+  };
 }
 
 export default async function ProjectPage({ params }: Props) {
@@ -37,7 +55,10 @@ export default async function ProjectPage({ params }: Props) {
           <div className="case-eyebrow"><span>PROJECT / {project.number}</span><span>{project.category} &nbsp; / &nbsp; {project.yearLabel}</span></div>
           <h1>{project.title}<span>.</span></h1>
           <p className="case-intro">{project.intro}</p>
-          <div className="case-cover blueprint-host"><Image src={project.image} alt={project.imageAlt} fill priority sizes="(max-width: 900px) 100vw, 1200px" /><BlueprintSelectionFrame projectNumber={project.number} /></div>
+          <div
+            className="case-cover blueprint-host"
+            style={project.imageAspectRatio ? { aspectRatio: project.imageAspectRatio } : undefined}
+          ><Image src={project.image} alt={project.imageAlt} fill priority sizes="(max-width: 900px) 100vw, 1200px" /><BlueprintSelectionFrame projectNumber={project.number} /></div>
         </section>
         <section className="shell case-details" data-grid-spotlight>
           <aside className="case-sidebar"><p className="section-eyebrow"><span>01</span> / PROJECT DETAILS</p><div><span>ROLE</span><p>{project.role}</p></div><div><span>TOOLS & SKILLS</span><div className="case-tools">{project.tools.map((tool) => <span key={tool}>{tool}</span>)}</div></div>{project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-link">View live project <ArrowUpRight size={17}/></a>}{project.repositoryUrl && <a href={project.repositoryUrl} target="_blank" rel="noopener noreferrer" className="text-link">View source code <ArrowUpRight size={17}/></a>}</aside>

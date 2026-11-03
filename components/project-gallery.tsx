@@ -9,7 +9,7 @@ import { projects, type ProjectCategory } from "@/data/portfolio";
 import { BlueprintSelectionFrame } from "@/components/blueprint-selection-frame";
 import { MeasurementOverlay } from "@/components/measurement-overlay";
 
-const filters: Array<"All" | ProjectCategory> = ["All", "Websites", "Systems", "UI/UX", "Hardware"];
+const filters: Array<"All" | ProjectCategory> = ["All", "Websites", "Google Sheets Automation", "UI/UX"];
 
 export function ProjectGallery() {
   const [active, setActive] = useState<(typeof filters)[number]>("All");
@@ -64,7 +64,10 @@ export function ProjectGallery() {
             className={`project-card ${isLeadProject ? "project-card-wide project-card-featured" : ""}`}
             key={project.slug}
           >
-            <div className={`project-visual blueprint-host tone-${project.color}`}>
+            <div
+              className={`project-visual blueprint-host tone-${project.color}`}
+              style={project.imageAspectRatio ? { aspectRatio: project.imageAspectRatio } : undefined}
+            >
               <Image src={project.image} alt={project.imageAlt} fill sizes={isLeadProject ? "(max-width: 760px) 100vw, 66vw" : "(max-width: 760px) 100vw, 50vw"} />
               <span className="project-open" aria-hidden="true"><ArrowUpRight size={22}/></span>
               <BlueprintSelectionFrame projectNumber={project.number} />
