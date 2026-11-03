@@ -559,8 +559,9 @@ body.preloader-lock { overflow: hidden; }
   .experience-entry h3 { max-width: 100%; font-size: clamp(20px, 6.5vw, 27px); line-height: 1; letter-spacing: -.045em; overflow-wrap: break-word; }
   .experience-entry :is(.micro-label, p) { max-width: 100%; overflow-wrap: break-word; }
   .experience-statement { align-items: flex-start; flex-wrap: wrap; padding-block: 18px; }
-  .contact-heading-wrap { padding-block: 68px; }
-  .contact-heading-wrap h2 { max-width: 100%; font-size: clamp(42px, 12.5vw, 62px); line-height: .9; letter-spacing: -.075em; }
+  .contact-heading-wrap { min-width: 0; padding-block: 60px; }
+  .contact-heading-wrap h2 { width: 100%; min-width: 0; max-width: 100%; font-size: clamp(40px, 11.75vw, 58px); line-height: .92; letter-spacing: -.07em; }
+  .contact-heading-wrap h2 > span { display: block; width: min-content; max-width: 100%; }
   .contact-rail span:last-child { display: none; }
   .contact-pending { max-width: 100%; line-height: 1.6; overflow-wrap: break-word; }
   .footer-main { grid-template-columns: 1fr; }
