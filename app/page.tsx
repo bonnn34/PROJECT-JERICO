@@ -10,6 +10,8 @@ import { MeasurementOverlay } from "@/components/measurement-overlay";
 import { competencies, experience, profile, projects } from "@/data/portfolio";
 
 export default function HomePage() {
+  const [emailLocalPart, emailDomain] = profile.email.split("@");
+
   return (
     <div id="top">
       <SiteHeader />
@@ -86,7 +88,7 @@ export default function HomePage() {
             <div className="contact-heading-wrap"><h2 id="contact-heading">LET&apos;S BUILD<br /><span>SOMETHING<span className="contact-desktop-space"> </span><br className="contact-mobile-break" />USEFUL.</span></h2><ArrowUpRight size={72} strokeWidth={1.2} aria-hidden="true" /></div>
             <div className="contact-bottom">
               <p>GOOD PROJECTS START WITH<br />A CLEAR CONVERSATION.</p>
-              {profile.email ? <a className="contact-email" href={`mailto:${profile.email}?subject=Let's%20work%20together`}>{profile.email}<ArrowUpRight size={24} /></a> : <span className="contact-pending">CONTACT DETAILS COMING SOON</span>}
+              {profile.email ? <a className="contact-email" href={`mailto:${profile.email}?subject=Let's%20work%20together`}><span>{emailLocalPart}@<wbr />{emailDomain}</span><ArrowUpRight size={24} aria-hidden="true" /></a> : <span className="contact-pending">CONTACT DETAILS COMING SOON</span>}
               <div className="socials">
                 {profile.github && <a href={profile.github} target="_blank" rel="noopener noreferrer">GITHUB ↗</a>}
                 {profile.behance && <a href={profile.behance} target="_blank" rel="noopener noreferrer">BEHANCE ↗</a>}
