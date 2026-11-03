@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 180" role="img" aria-labelledby="title">
+  <title id="title">Project Jerico editorial wordmark</title>
+  <g fill="#0B0B0B" transform="translate(8 5) scale(.85)">
+    <path fill-rule="evenodd" d="M30 32h62c27 0 43 16 43 43s-16 43-43 43H68v50H30V32Zm38 32v24h22c7 0 10-5 10-12s-3-12-10-12H68Z"/>
+    <path d="M128 32h42v90c0 31-19 49-50 49-29 0-47-17-47-46h37c0 11 3 16 11 16 5 0 7-4 7-17V32Z"/>
+  </g>
+  <g fill="#0B0B0B" font-family="Arial, Helvetica, sans-serif" font-size="73" font-weight="900" letter-spacing="-6"><text x="190" y="77">PROJECT</text><text x="190" y="144">JERICO</text></g>
+</svg>

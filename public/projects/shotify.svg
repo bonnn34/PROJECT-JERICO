@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="870" viewBox="0 0 1440 870"><rect width="1440" height="870" fill="#60506e"/><defs><radialGradient id="g"><stop stop-color="#aa6cb1"/><stop offset="1" stop-color="#342640"/></radialGradient><linearGradient id="album" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ea7a98"/><stop offset="1" stop-color="#6b60a8"/></linearGradient></defs>
+<circle cx="165" cy="170" r="320" fill="#b785ad" opacity=".55"/><circle cx="1240" cy="680" r="350" fill="#6d6088" opacity=".3"/>
+<circle cx="290" cy="625" r="240" fill="none" stroke="#7c6d9d" stroke-width="2"/><circle cx="1190" cy="180" r="180" fill="none" stroke="#b4a0b5" stroke-width="2"/>
+<text x="117" y="130" font-size="34" fill="#f1e2ef" font-family="Arial" font-weight="bold" >SHOTIFY /</text><text x="119" y="183" font-size="62" fill="#f9e9f7" font-family="Arial" font-weight="bold" >THE MUSIC</text><text x="120" y="250" font-size="62" fill="#f9e9f7" font-family="Arial" font-weight="bold" >MOODBOARD</text><text x="120" y="312" font-size="17" fill="#d9b9da" font-family="Arial" font-weight="normal" letter-spacing="3">UI CONCEPT  /  03</text>
+<rect x="538" y="30" width="424" height="810" rx="59" fill="#181321" stroke="#4f4359" stroke-width="13"/>
+<rect x="553" y="46" width="394" height="778" rx="49" fill="#241d2b"/>
+<rect x="691" y="56" width="116" height="23" rx="12" fill="#141018"/>
+<text x="595" y="114" font-size="16" fill="#f8eef9" font-family="Arial" font-weight="bold" >9:41</text><text x="878" y="114" font-size="16" fill="#efe4ef" font-family="Arial" font-weight="normal" >●  ▰</text><text x="592" y="181" font-size="13" fill="#d0bccc" font-family="Arial" font-weight="bold" letter-spacing="2">NOW PLAYING</text><text x="884" y="181" font-size="22" fill="#d0bccc" font-family="Arial" font-weight="normal" >•••</text>
+<rect x="591" y="214" width="320" height="311" rx="19" fill="url(#album)"/>
+<circle cx="751" cy="361" r="114" fill="#edafbb" opacity=".3"/><circle cx="751" cy="361" r="86" fill="#412b61"/><circle cx="751" cy="361" r="63" fill="#ac85b0"/><circle cx="751" cy="361" r="39" fill="#e4b5c2"/>
+<path d="M592 460 Q700 302 911 464" fill="none" stroke="#efccd7" stroke-width="2"/>
+<text x="591" y="572" font-size="26" fill="#fff1fc" font-family="Arial" font-weight="bold" >Afterglow</text><text x="592" y="599" font-size="15" fill="#a99aaa" font-family="Arial" font-weight="normal" >Late night sessions</text>
+<line x1="593" y1="641" x2="911" y2="641" stroke="#6b6371" stroke-width="5" stroke-linecap="round"/><line x1="593" y1="641" x2="769" y2="641" stroke="#e2a1be" stroke-width="5" stroke-linecap="round"/><circle cx="769" cy="641" r="8" fill="#f7c4d9"/>
+<text x="592" y="665" font-size="12" fill="#b9a9be" font-family="Arial" font-weight="normal" >1:42</text><text x="877" y="665" font-size="12" fill="#b9a9be" font-family="Arial" font-weight="normal" >3:25</text>
+<circle cx="751" cy="729" r="36" fill="#f4c5d9"/><path d="M744 710 L744 747 L770 729 Z" fill="#33283c"/>
+<path d="M660 716 v27 m0-14 l-20-16 v32z M842 716 v27 m0-14 l20-16 v32z" fill="#d9b8ce" stroke="#d9b8ce" stroke-width="3"/>
+<text x="1050" y="624" font-size="25" fill="#f2e3f4" font-family="Arial" font-weight="bold" >INTERFACE DESIGN</text><text x="1052" y="662" font-size="30" fill="#ddc1e0" font-family="Georgia" font-weight="normal" font-style="italic">MUSIC. MOOD.</text></svg>

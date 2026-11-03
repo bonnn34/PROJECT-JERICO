@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="870" viewBox="0 0 1440 870"><rect width="1440" height="870" fill="#e0d0b5"/><circle cx="1210" cy="140" r="315" fill="#e9d0a4"/><circle cx="120" cy="780" r="340" fill="#ccbc9f" opacity=".5"/>
+<rect x="120" y="65" width="1200" height="740" rx="8" fill="#f8f1e4"/>
+<text x="179" y="133" font-size="14" fill="#a58d68" font-family="Arial" font-weight="bold" letter-spacing="3">PROTOTYPE  /  05</text><text x="177" y="220" font-size="80" fill="#343c36" font-family="Arial" font-weight="bold" >SMART</text><text x="177" y="312" font-size="80" fill="#343c36" font-family="Arial" font-weight="bold" >TRASH BIN</text><text x="183" y="365" font-size="16" fill="#8d856f" font-family="Arial" font-weight="bold" letter-spacing="2">ARDUINO UNO  /  HARDWARE EXPERIMENT</text>
+<line x1="180" y1="397" x2="720" y2="397" stroke="#bfb6a1"/>
+<text x="180" y="443" font-size="21" fill="#7c7668" font-family="Georgia" font-weight="normal" >A practical automation concept</text><text x="180" y="471" font-size="21" fill="#7c7668" font-family="Georgia" font-weight="normal" >powered by simple electronics.</text>
+<path d="M895 320 L1162 320 L1126 694 L926 694Z" fill="#5d7770" stroke="#3c584f" stroke-width="9"/>
+<path d="M864 310 Q865 284 891 284 H1169 Q1197 284 1197 310 V336 H864 Z" fill="#33453f"/>
+<path d="M909 300 Q930 250 974 250 H1083 Q1139 250 1157 300" fill="none" stroke="#718d7f" stroke-width="13"/>
+<rect x="982" y="402" width="95" height="37" rx="8" fill="#38574d"/>
+<circle cx="1007" cy="419" r="10" fill="#b3cfc0"/><circle cx="1054" cy="419" r="10" fill="#b3cfc0"/>
+<path d="M1016 440 L1016 480 L1112 526" fill="none" stroke="#bc8d60" stroke-width="3" stroke-dasharray="10 8"/>
+<rect x="702" y="559" width="170" height="113" rx="10" fill="#2d6c6d" stroke="#1d5458" stroke-width="4"/>
+<text x="715" y="580" font-size="18" fill="#e0ffff" font-family="Arial" font-weight="bold" >UNO</text>
+<rect x="730" y="598" width="71" height="43" rx="4" fill="#183b42"/>
+<g fill="#cfa969"><rect x="714" y="549" width="7" height="9"/><rect x="731" y="549" width="7" height="9"/><rect x="748" y="549" width="7" height="9"/><rect x="765" y="549" width="7" height="9"/><rect x="782" y="549" width="7" height="9"/><rect x="799" y="549" width="7" height="9"/></g>
+<path d="M872 611 Q905 590 920 481" fill="none" stroke="#bb9066" stroke-width="3" stroke-dasharray="9 8"/>
+<text x="181" y="683" font-size="15" fill="#b3865e" font-family="Arial" font-weight="bold" >INPUT</text><text x="181" y="708" font-size="18" fill="#53594c" font-family="Arial" font-weight="bold" >SENSOR</text><text x="328" y="683" font-size="15" fill="#b3865e" font-family="Arial" font-weight="bold" >LOGIC</text><text x="328" y="708" font-size="18" fill="#53594c" font-family="Arial" font-weight="bold" >CONTROLLER</text><text x="511" y="683" font-size="15" fill="#b3865e" font-family="Arial" font-weight="bold" >OUTPUT</text><text x="511" y="708" font-size="18" fill="#53594c" font-family="Arial" font-weight="bold" >ACTION</text></svg>

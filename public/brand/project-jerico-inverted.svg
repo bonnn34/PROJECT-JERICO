@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-labelledby="title desc">
+  <title id="title">Project Jerico inverted logo</title>
+  <desc id="desc">Black PJ monogram centered over a thin circle and diamond on warm ivory.</desc>
+  <rect width="720" height="360" fill="#F5F2EB"/>
+  <g fill="none" stroke="#A6A39C" stroke-width="1"><circle cx="360" cy="180" r="142"/><path d="M360 20 520 180 360 340 200 180Z"/></g>
+  <g fill="#0B0B0B" transform="translate(278 98) scale(.82)">
+    <path fill-rule="evenodd" d="M30 32h62c27 0 43 16 43 43s-16 43-43 43H68v50H30V32Zm38 32v24h22c7 0 10-5 10-12s-3-12-10-12H68Z"/>
+    <path d="M128 32h42v90c0 31-19 49-50 49-29 0-47-17-47-46h37c0 11 3 16 11 16 5 0 7-4 7-17V32Z"/>
+  </g>
+  <g fill="#0B0B0B" font-family="Courier New, monospace" text-anchor="end"><text x="680" y="316" font-size="8" font-weight="700" letter-spacing="1.2">PJ / 001</text><text x="680" y="332" font-size="6" letter-spacing=".7">PROJECT JERICO / WEB / DESIGN / SYSTEMS</text></g>
+</svg>
