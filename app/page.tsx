@@ -83,7 +83,7 @@ export default function HomePage() {
         <section id="contact" className="contact-section" aria-labelledby="contact-heading">
           <div className="shell">
             <div className="contact-rail"><span>06 / GET IN TOUCH</span><span>HAVE A PROJECT OR AN IDEA?</span></div>
-            <div className="contact-heading-wrap"><h2 id="contact-heading">LET&apos;S BUILD<br /><span>SOMETHING USEFUL.</span></h2><ArrowUpRight size={72} strokeWidth={1.2} aria-hidden="true" /></div>
+            <div className="contact-heading-wrap"><h2 id="contact-heading">LET&apos;S BUILD<br /><span>SOMETHING<span className="contact-desktop-space"> </span><br className="contact-mobile-break" />USEFUL.</span></h2><ArrowUpRight size={72} strokeWidth={1.2} aria-hidden="true" /></div>
             <div className="contact-bottom">
               <p>GOOD PROJECTS START WITH<br />A CLEAR CONVERSATION.</p>
               {profile.email ? <a className="contact-email" href={`mailto:${profile.email}?subject=Let's%20work%20together`}>{profile.email}<ArrowUpRight size={24} /></a> : <span className="contact-pending">CONTACT DETAILS COMING SOON</span>}
