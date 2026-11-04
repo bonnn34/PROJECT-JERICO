@@ -23,9 +23,12 @@ export function SitePreloader() {
 
     if (shouldSkip) {
       setVisible(false);
+      document.documentElement.dataset.siteReady = "true";
+      window.dispatchEvent(new Event("project-jerico:ready"));
       return;
     }
 
+    let disposed = false;
     let hasFinished = false;
     const timers = new Set<number>();
     const eventController = new AbortController();
@@ -53,7 +56,7 @@ export function SitePreloader() {
     };
 
     const beginExit = () => {
-      if (hasFinished) return;
+      if (hasFinished || disposed) return;
       hasFinished = true;
       setReady(true);
       setPhase("complete");
@@ -70,6 +73,8 @@ export function SitePreloader() {
         schedule(() => {
           setVisible(false);
           releaseSite();
+          document.documentElement.dataset.siteReady = "true";
+          window.dispatchEvent(new Event("project-jerico:ready"));
         }, CURTAIN_DURATION);
       }, COMPLETION_HOLD);
     };
@@ -86,7 +91,7 @@ export function SitePreloader() {
           // Font readiness is helpful but must never block access.
         }
       }
-      setReady(true);
+      if (!disposed) setReady(true);
     };
 
     const construction = new Promise<void>((resolve) => schedule(resolve, CONSTRUCTION_DURATION));
@@ -95,6 +100,7 @@ export function SitePreloader() {
     schedule(beginExit, SAFETY_TIMEOUT);
 
     return () => {
+      disposed = true;
       timers.forEach((timer) => window.clearTimeout(timer));
       timers.clear();
       eventController.abort();

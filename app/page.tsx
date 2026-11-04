@@ -7,6 +7,7 @@ import { ProjectJericoMark } from "@/components/project-jerico-logo";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { MeasurementOverlay } from "@/components/measurement-overlay";
+import { GlobalAgentOverlay } from "@/components/construction/global-agent-overlay";
 import { competencies, experience, profile, projects } from "@/data/portfolio";
 
 export default function HomePage() {
@@ -101,6 +102,7 @@ export default function HomePage() {
         </section>
       </main>
       <SiteFooter />
+      <GlobalAgentOverlay />
     </div>
   );
 }

@@ -2,9 +2,11 @@ import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
+import "@/components/construction/construction.css";
 import { profile, siteUrl } from "@/data/portfolio";
 import { EditorialPointerInteractions } from "@/components/editorial-pointer-interactions";
 import { SitePreloader } from "@/components/site-preloader";
+import { ConstructionPreferences } from "@/components/construction/construction-preferences";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -77,10 +79,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />
       </head>
       <body>
-        <SitePreloader />
-        <EditorialPointerInteractions />
-        <a className="skip-link" href="#main-content">Skip to content</a>
-        <div data-site-content>{children}</div>
+        <ConstructionPreferences>
+          <SitePreloader />
+          <EditorialPointerInteractions />
+          <a className="skip-link" href="#main-content">Skip to content</a>
+          <div data-site-content>{children}</div>
+        </ConstructionPreferences>
         <Analytics />
         <SpeedInsights />
       </body>

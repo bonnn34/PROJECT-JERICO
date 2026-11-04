@@ -1,0 +1,43 @@
+/* One non-interactive viewport layer. The coordinator owns its entire clock. */
+/* Hero entrance belongs to the coordinator. Identity arrow transitions remain. */
+.hero :is(.hero-kicker, .hero-tags, .hero-media, .hero-media-caption, .hero-location, .hero-intro, .hero-brand-lockup, .hero-index) { animation: none; }
+.global-agent-overlay { position: fixed; z-index: 85; inset: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; contain: strict; }
+.global-agent-overlay * { pointer-events: none; animation: none !important; transition: none !important; }
+.global-agent-overlay text { font: 700 8px/1 "Courier New", monospace; letter-spacing: .25px; }
+.construction-selection { fill: none; stroke: currentColor; stroke-width: .8; }
+.construction-handle { fill: var(--paper); stroke: currentColor; stroke-width: .8; }
+.construction-guides { fill: none; stroke: currentColor; stroke-width: .65; stroke-dasharray: 3 4; opacity: .55; }
+.construction-action-label { fill: currentColor; paint-order: stroke; stroke: var(--paper); stroke-width: 3px; stroke-linejoin: round; }
+
+/* These properties are transient and never affect document flow. There is no
+   pending/hidden state: server rendering and interrupted sequences stay readable. */
+[data-construction-target] {
+  translate: var(--construction-x, 0px) var(--construction-y, 0px);
+  scale: var(--construction-scale, 1);
+  opacity: var(--construction-opacity, 1);
+  mask-image: var(--construction-mask, none);
+  transform-origin: left top;
+  transition: none !important;
+  will-change: translate, scale, opacity;
+}
+[data-construction-effect="style"] { border-color: var(--construction-border, var(--line)) !important; }
+[data-construction-state="active"] :is(.measurement-overlay, .blueprint-selection-frame, .blueprint-handle, .editorial-project-preview) { opacity: 0 !important; visibility: hidden !important; }
+[data-construction-state="active"]::before { opacity: 0 !important; }
+
+.build-animation-setting { margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--inverse-line); }
+.build-animation-setting button { display: flex; justify-content: space-between; align-items: center; gap: 16px; width: 100%; min-height: 44px; padding: 0; border: 0; background: transparent; color: var(--inverse-fg); cursor: pointer; font: 700 10px/1.4 var(--mono); letter-spacing: .1em; }
+.build-animation-setting button:disabled { opacity: .55; cursor: default; }
+.build-animation-setting button:focus-visible { outline-color: var(--inverse-fg); outline-offset: 5px; }
+.build-setting-value { display: inline-flex; align-items: center; gap: 9px; color: var(--inverse-muted); }
+.build-setting-value i { display: block; width: 22px; height: 12px; padding: 2px; border: 1px solid var(--inverse-muted); border-radius: 20px; }
+.build-setting-value i::after { content: ""; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--inverse-muted); }
+[aria-checked="true"] .build-setting-value { color: var(--inverse-fg); }
+[aria-checked="true"] .build-setting-value i::after { transform: translateX(10px); background: var(--inverse-fg); }
+.build-animation-setting p { margin: 8px 0 0; color: var(--inverse-muted); font: 9px/1.6 var(--mono); }
+
+@media (max-width: 600px), (prefers-reduced-motion: reduce), print {
+  .global-agent-overlay { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce), print {
+  [data-construction-target] { opacity: 1 !important; translate: none !important; scale: none !important; mask-image: none !important; }
+}

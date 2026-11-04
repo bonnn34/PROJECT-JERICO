@@ -15,9 +15,11 @@ type Direction = "previous" | "next";
 export function HeroIdentitySwitcher() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState<Direction>("next");
+  const [hasChanged, setChanged] = useState(false);
   const activeIdentity = identities[activeIndex];
 
   const move = (step: -1 | 1) => {
+    setChanged(true);
     setDirection(step === 1 ? "next" : "previous");
     setActiveIndex((current) => (current + step + identities.length) % identities.length);
   };
@@ -28,7 +30,7 @@ export function HeroIdentitySwitcher() {
         <div className="hero-title-viewport" aria-live="polite" aria-atomic="true">
           <h1
             id="hero-title"
-            className={`hero-title hero-title-${direction}`}
+            className={"hero-title" + (hasChanged ? " hero-title-" + direction : "")}
             key={`${activeIndex}-${direction}`}
           >
             {activeIdentity.lines.map((line) => <span key={line}>{line}</span>)}

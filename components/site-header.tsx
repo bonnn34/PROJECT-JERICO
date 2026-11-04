@@ -7,6 +7,7 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { profile } from "@/data/portfolio";
 import { ProjectJericoWordmark } from "@/components/project-jerico-logo";
 import { ThemeControl } from "@/components/theme-control";
+import { BuildAnimationControl } from "@/components/construction/construction-preferences";
 
 const navItems = [
   { label: "Work", href: "/#work" }, { label: "About", href: "/#about" },
@@ -37,7 +38,12 @@ export function SiteHeader() {
         <div className="header-utilities"><span className="header-location"><i /> {profile.location}</span><ThemeControl /><Link className="header-resume" href="/resume">RESUME <ArrowUpRight size={13} /></Link><button type="button" className="menu-toggle" aria-controls="site-menu" aria-expanded={isOpen} aria-label={isOpen ? "Close menu" : "Open menu"} onClick={() => setOpen((value) => !value)}><span>{isOpen ? "CLOSE" : "MENU"}</span>{isOpen ? <X size={21} /> : <Menu size={21} />}</button></div>
       </div>
       <nav id="site-menu" className={`site-menu ${isOpen ? "is-open" : ""}`} aria-label="Main navigation" aria-hidden={!isOpen} inert={!isOpen} onClick={(event) => event.target === event.currentTarget && setOpen(false)}>
-        <div className="shell site-menu-inner"><p className="micro-label">NAVIGATION / INDEX</p>{navItems.map((item, index) => <Link href={item.href} onClick={() => setOpen(false)} key={item.label}><span>0{index + 1}</span>{item.label}<ArrowUpRight size={24} /></Link>)}<Link href="/resume" onClick={() => setOpen(false)}><span>06</span>Resume<ArrowUpRight size={24} /></Link></div>
+        <div className="shell site-menu-inner">
+          <p className="micro-label">NAVIGATION / INDEX</p>
+          {navItems.map((item, index) => <Link href={item.href} onClick={() => setOpen(false)} key={item.label}><span>0{index + 1}</span>{item.label}<ArrowUpRight size={24} /></Link>)}
+          <Link href="/resume" onClick={() => setOpen(false)}><span>06</span>Resume<ArrowUpRight size={24} /></Link>
+          <BuildAnimationControl />
+        </div>
       </nav>
     </header>
   );
