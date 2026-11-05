@@ -20,7 +20,8 @@ export function SiteHeader() {
   const pathname = usePathname();
   useEffect(() => setOpen(false), [pathname]);
   useLayoutEffect(() => {
-    const scrollbarWidth = isOpen ? window.innerWidth - document.documentElement.clientWidth : 0;
+    const reservedGutter = getComputedStyle(document.documentElement).getPropertyValue("scrollbar-gutter").includes("stable");
+    const scrollbarWidth = isOpen && !reservedGutter ? window.innerWidth - document.documentElement.clientWidth : 0;
     document.body.style.setProperty("--scrollbar-compensation", `${scrollbarWidth}px`);
     document.body.classList.toggle("nav-open", isOpen);
     const onKeyDown = (event: KeyboardEvent) => event.key === "Escape" && setOpen(false);

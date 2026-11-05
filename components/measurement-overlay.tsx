@@ -53,10 +53,12 @@ export function MeasurementOverlay({
 
     const measure = () => {
       const targets = getTargets();
-      if (targets.length === 0) return;
+      if (targets.length === 0) { setMeasurement(EMPTY_MEASUREMENT); return false; }
 
       const hostRect = host.getBoundingClientRect();
-      const targetRects = targets.map((target) => target.getBoundingClientRect());
+      const targetRects = targets.map((target) => target.getBoundingClientRect())
+        .filter(rect => [rect.left, rect.top, rect.width, rect.height].every(Number.isFinite) && rect.width > 0 && rect.height > 0);
+      if (!targetRects.length) { setMeasurement(EMPTY_MEASUREMENT); return false; }
       const left = Math.min(...targetRects.map((rect) => rect.left));
       const top = Math.min(...targetRects.map((rect) => rect.top));
       const right = Math.max(...targetRects.map((rect) => rect.right));
@@ -76,6 +78,7 @@ export function MeasurementOverlay({
           ? current
           : next
       ));
+      return next.width > 0 && next.height > 0;
     };
 
     const observeCurrentTargets = () => {
@@ -88,10 +91,10 @@ export function MeasurementOverlay({
     };
 
     const activate = () => {
-      measure();
+      const measured = measure();
       observeCurrentTargets();
-      activeRef.current = true;
-      setActive(true);
+      activeRef.current = measured;
+      setActive(measured);
     };
 
     const onPointerEnter = () => {
@@ -131,6 +134,7 @@ export function MeasurementOverlay({
     };
   }, [delay, targetSelector]);
 
+  const hasMeasurement = Number.isFinite(measurement.width) && Number.isFinite(measurement.height) && measurement.width > 0 && measurement.height > 0;
   const style = {
     left: measurement.left,
     top: measurement.top,
@@ -142,11 +146,11 @@ export function MeasurementOverlay({
   return (
     <span
       ref={overlayRef}
-      className={`measurement-overlay measurement-${variant} ${isActive ? "is-active" : ""}`}
+      className={`measurement-overlay measurement-${variant} ${isActive && hasMeasurement ? "is-active" : ""}`}
       style={style}
       aria-hidden="true"
     >
-      {(variant === "horizontal" || variant === "dimensions") && (
+      {hasMeasurement && (variant === "horizontal" || variant === "dimensions") && (
         <span className="measurement-axis measurement-axis-horizontal">
           <i className="measurement-line" />
           <i className="measurement-tick measurement-tick-start" />
@@ -155,7 +159,7 @@ export function MeasurementOverlay({
         </span>
       )}
 
-      {variant === "dimensions" && (
+      {hasMeasurement && variant === "dimensions" && (
         <span className="measurement-axis measurement-axis-vertical">
           <i className="measurement-line" />
           <i className="measurement-tick measurement-tick-start" />
@@ -164,7 +168,7 @@ export function MeasurementOverlay({
         </span>
       )}
 
-      {variant === "corners" && (
+      {hasMeasurement && variant === "corners" && (
         <>
           {!reuseExistingCorners && (
             <span className="measurement-corner-set">

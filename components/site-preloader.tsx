@@ -155,14 +155,14 @@ export function SitePreloader() {
       <div className="preloader-status-panel">
         <div className="preloader-status-line">
           <span>{isReady ? "COMPOSITION COMPLETE" : "COMPOSITION IN PROGRESS"}</span>
-          <span>{isReady ? "100%" : "—"}</span>
+          <span className="preloader-status-value" data-ready={isReady} aria-hidden="true"><span>—</span><span>100%</span></span>
         </div>
         <div className={`preloader-progress ${isReady ? "is-complete" : ""}`} aria-hidden="true">
           <i />
         </div>
         <div className="preloader-status-meta" aria-hidden="true">
           <span>WEB / DESIGN / SYSTEMS</span>
-          <span>{isReady ? "READY" : "SYNCHRONIZING"}</span>
+          <span className="preloader-status-value" data-ready={isReady}><span>SYNCHRONIZING</span><span>READY</span></span>
         </div>
       </div>
     </div>

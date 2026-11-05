@@ -33,6 +33,7 @@ export function GlobalAgentOverlay() {
           <rect data-agent-box className="construction-selection" />
           {[0, 1, 2, 3].map(corner => <rect key={corner} data-agent-handle={corner} width="5" height="5" className="construction-handle" />)}
           <text data-agent-action className="construction-action-label" />
+          <path data-agent-caret fill="none" stroke="currentColor" strokeWidth="1.5" />
           <g data-agent-check><circle r="7" fill="currentColor" /><path d="m-3 0 2 2 4-4" fill="none" stroke="var(--paper)" strokeWidth="1.3" /></g>
         </g>
         <g data-agent-pointer>

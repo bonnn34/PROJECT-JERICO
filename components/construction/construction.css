@@ -14,15 +14,17 @@
 [data-construction-target] {
   translate: var(--construction-x, 0px) var(--construction-y, 0px);
   scale: var(--construction-scale, 1);
-  opacity: var(--construction-opacity, 1);
+  opacity: 1;
   mask-image: var(--construction-mask, none);
   transform-origin: left top;
   transition: none !important;
-  will-change: translate, scale, opacity;
+  will-change: translate, scale;
 }
 [data-construction-effect="style"] { border-color: var(--construction-border, var(--line)) !important; }
 [data-construction-state="active"] :is(.measurement-overlay, .blueprint-selection-frame, .blueprint-handle, .editorial-project-preview) { opacity: 0 !important; visibility: hidden !important; }
 [data-construction-state="active"]::before { opacity: 0 !important; }
+.project-card[data-construction-state="active"] .project-visual img { transform: none; transition: none; }
+.project-gallery:has(.project-card[data-construction-state="active"]) .editorial-project-preview { visibility: hidden !important; opacity: 0 !important; }
 
 .build-animation-setting { margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--inverse-line); }
 .build-animation-setting button { display: flex; justify-content: space-between; align-items: center; gap: 16px; width: 100%; min-height: 44px; padding: 0; border: 0; background: transparent; color: var(--inverse-fg); cursor: pointer; font: 700 10px/1.4 var(--mono); letter-spacing: .1em; }
@@ -35,7 +37,7 @@
 [aria-checked="true"] .build-setting-value i::after { transform: translateX(10px); background: var(--inverse-fg); }
 .build-animation-setting p { margin: 8px 0 0; color: var(--inverse-muted); font: 9px/1.6 var(--mono); }
 
-@media (max-width: 600px), (prefers-reduced-motion: reduce), print {
+@media (prefers-reduced-motion: reduce), print {
   .global-agent-overlay { display: none !important; }
 }
 @media (prefers-reduced-motion: reduce), print {

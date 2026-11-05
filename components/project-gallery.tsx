@@ -63,6 +63,7 @@ export function ProjectGallery() {
             href={`/projects/${project.slug}`}
             className={`project-card ${isLeadProject ? "project-card-wide project-card-featured" : ""}`}
             key={project.slug}
+            data-project={project.slug}
           >
             <div
               className={`project-visual blueprint-host tone-${project.color}`}

@@ -1,8 +1,8 @@
-import { deviceFor, planFor, SECTION_PLANS, type SectionPlan } from "./construction-timeline";
+import { cardPlan, deviceFor, planFor, SECTION_PLANS, type SectionPlan } from "./construction-timeline";
 import { createConstructionScene, documentBounds, type Bounds, type Viewport } from "./construction-renderer";
 
 type Preferences = { ready: boolean; enabled: boolean; reducedMotion: boolean };
-type Section = { element: HTMLElement; trigger: HTMLElement; plan: SectionPlan; box: Bounds; triggerBox: Bounds };
+type Section = { key: string; element: HTMLElement; trigger: HTMLElement; plan: SectionPlan; box: Bounds; triggerBox: Bounds; layoutWidth: number; layoutHeight: number };
 type Active = { section: Section; scene: ReturnType<typeof createConstructionScene>; start: number; duration: number };
 export type ConstructionCoordinator = ReturnType<typeof createConstructionCoordinator>;
 
@@ -22,16 +22,25 @@ export function createConstructionCoordinator(overlay: SVGSVGElement, completed:
   let anchorUntil = location.hash ? performance.now() + 900 : 0;
   let previousScroll = window.scrollY;
   let previousScrollTime = performance.now();
+  let lastPaint = 0;
+  let costlyFrames = 0;
+  const frameInterval = navigator.hardwareConcurrency <= 4 ? 1000 / 30 : 0;
   const viewport: Viewport = { width: innerWidth, height: innerHeight, scrollX, scrollY, header: 73 };
-  const sections: Section[] = SECTION_PLANS.flatMap(plan => {
-    const element = document.querySelector<HTMLElement>(plan.id === "hero" ? ".hero" : plan.id === "footer" ? ".site-footer" : "#" + plan.id);
-    if (!element) return [];
-    element.dataset.constructionSection = plan.id;
-    element.dataset.constructionState = completed.has(plan.id) ? "complete" : "pending";
-    return [{ element, trigger: element.querySelector<HTMLElement>(plan.trigger) ?? element, plan, box: documentBounds(element), triggerBox: documentBounds(element.querySelector(plan.trigger) ?? element) }];
+  const collect = (): Section[] => SECTION_PLANS.flatMap(source => {
+    const selector = source.id === "hero" ? ".hero" : source.id === "work" ? ".project-card[data-project]" : source.id === "footer" ? ".site-footer" : "#" + source.id;
+    return Array.from(document.querySelectorAll<HTMLElement>(selector)).map((element,index) => {
+      const key = source.id === "work" ? "work:" + element.dataset.project : source.id;
+      const plan = source.id === "work" ? cardPlan(source,index,element.classList.contains("project-card-featured")) : source;
+      const trigger = element.querySelector<HTMLElement>(plan.trigger) ?? element;
+      element.dataset.constructionSection = plan.id;
+      element.dataset.constructionKey = key;
+      element.dataset.constructionState = completed.has(key) ? "complete" : "pending";
+      return { key, element, trigger, plan, box: documentBounds(element), triggerBox: documentBounds(trigger), layoutWidth: element.offsetWidth, layoutHeight: element.offsetHeight };
+    });
   });
+  let sections = collect();
   const complete = (section: Section, reason: string) => {
-    completed.add(section.plan.id);
+    completed.add(section.key);
     section.element.dataset.constructionState = "complete";
     section.element.dataset.constructionReason = reason;
   };
@@ -41,6 +50,7 @@ export function createConstructionCoordinator(overlay: SVGSVGElement, completed:
     complete(active.section, reason);
     active = null;
     overlay.removeAttribute("data-active-section");
+    overlay.removeAttribute("data-active-key");
   };
   const measure = () => {
     viewport.width = window.innerWidth;
@@ -51,6 +61,8 @@ export function createConstructionCoordinator(overlay: SVGSVGElement, completed:
     sections.forEach(section => {
       section.box = documentBounds(section.element);
       section.triggerBox = documentBounds(section.trigger);
+      section.layoutWidth = section.element.offsetWidth;
+      section.layoutHeight = section.element.offsetHeight;
     });
     dirty = false;
   };
@@ -58,7 +70,7 @@ export function createConstructionCoordinator(overlay: SVGSVGElement, completed:
   const inView = (section: Section) => section.box.y - viewport.scrollY < viewport.height && section.box.y + section.box.height - viewport.scrollY > viewport.header + 12;
   const eligible = (section: Section) => {
     const top = section.triggerBox.y - viewport.scrollY;
-    const threshold = section.plan.id === "work" ? .54 : section.plan.id === "contact" ? .3 : section.plan.id === "footer" ? .88 : .7;
+    const threshold = section.plan.id === "work" ? .3 : section.plan.id === "contact" ? .3 : section.plan.id === "footer" ? .88 : .7;
     const footerAtEnd = section.plan.id === "footer" && viewport.scrollY + viewport.height >= documentHeight - 2;
     return (top < viewport.height * threshold || footerAtEnd) && top + section.triggerBox.height > viewport.header + 20;
   };
@@ -77,13 +89,18 @@ export function createConstructionCoordinator(overlay: SVGSVGElement, completed:
     if (active && !inView(active.section)) finish("left-viewport");
     if (active && (now < fastUntil || now < anchorUntil)) finish("navigation");
     if (active) {
+      if (now - lastPaint < frameInterval) { request(); return; }
+      lastPaint = now;
       const elapsed = now - active.start;
       active.section.element.dataset.constructionTime = String(Math.round(elapsed));
+      const paintStart = performance.now();
       active.scene.paint(elapsed, viewport);
+      costlyFrames = performance.now() - paintStart > 12 ? costlyFrames + 1 : Math.max(0, costlyFrames - 1);
       if (elapsed >= active.duration) finish("finished");
+      else if (costlyFrames >= 5) finish("performance");
     }
     for (const section of sections) {
-      if (completed.has(section.plan.id) || active?.section === section) continue;
+      if (completed.has(section.key) || active?.section === section) continue;
       if (section.box.y + section.box.height - viewport.scrollY < viewport.header || section.triggerBox.y + section.triggerBox.height - viewport.scrollY < viewport.header) {
         complete(section, "passed");
       } else if (preferences.reducedMotion) {
@@ -100,7 +117,9 @@ export function createConstructionCoordinator(overlay: SVGSVGElement, completed:
         section.element.dataset.constructionState = "active";
         section.element.dataset.constructionRuns = String(Number(section.element.dataset.constructionRuns || 0) + 1);
         overlay.dataset.activeSection = section.plan.id;
-        active = { section, scene, start: now, duration: plan.duration };
+        overlay.dataset.activeKey = section.key;
+        active = { section, scene, start: now, duration: scene.duration };
+        costlyFrames = 0;
         scene.paint(0, viewport);
       }
     }
@@ -110,7 +129,7 @@ export function createConstructionCoordinator(overlay: SVGSVGElement, completed:
     const now = performance.now();
     const distance = Math.abs(window.scrollY - previousScroll);
     const speed = distance / Math.max(16, now - previousScrollTime);
-    if (distance > viewport.height * .55 || speed > 2.8) {
+    if (distance > viewport.height * .7 || (distance > 100 && speed > 5)) {
       fastUntil = now + 160;
       finish("fast-scroll");
     }
@@ -119,7 +138,10 @@ export function createConstructionCoordinator(overlay: SVGSVGElement, completed:
     previousScrollTime = now;
     request();
   };
-  const onResize = () => { finish("resize"); dirty = true; request(); };
+  const onResize = () => {
+    if (window.innerWidth !== viewport.width) finish("resize");
+    dirty = true; request();
+  };
   const resolveHash = (hash: string) => {
     let id = "";
     try { id = decodeURIComponent(hash.slice(1)); } catch { return; }
@@ -127,7 +149,7 @@ export function createConstructionCoordinator(overlay: SVGSVGElement, completed:
   };
   const anchor = (hash: string) => {
     const destination = resolveHash(hash);
-    if (destination) complete(destination, "anchor");
+    if (destination) sections.filter(section => section.plan.id === destination.plan.id).forEach(section => complete(section, "anchor"));
     finish("anchor");
     anchorUntil = performance.now() + 400;
     request();
@@ -144,15 +166,33 @@ export function createConstructionCoordinator(overlay: SVGSVGElement, completed:
     if (active && event.target instanceof Node && active.section.element.contains(event.target)) finish("keyboard");
   };
   const onPointerDown = (event: PointerEvent) => {
+    // A touch on a card can begin a scroll. Only an actual tap/click commits it.
+    if (event.pointerType === "touch") return;
     if (active && event.target instanceof Element && event.target.closest("a,button,[role=button]") && active.section.element.contains(event.target)) finish("interaction");
   };
   const onHidden = () => { if (document.hidden) finish("hidden-tab"); request(); };
   const onHash = () => anchor(location.hash);
   const onReady = () => { readyAfter = performance.now() + 100; dirty = true; request(); };
   const intersection = new IntersectionObserver(request, { threshold: [0, .01, .2], rootMargin: "-74px 0px -12% 0px" });
-  const resize = new ResizeObserver(() => { if (active) finish("layout-change"); dirty = true; request(); });
+  const resize = new ResizeObserver(entries => {
+    const changed = entries.some(entry => {
+      const section = sections.find(s => s.element === entry.target);
+      return section && (Math.abs(section.element.offsetWidth - section.layoutWidth) > 1 || Math.abs(section.element.offsetHeight - section.layoutHeight) > 1);
+    });
+    if (active && changed) finish("layout-change");
+    dirty = true; request();
+  });
   const menu = new MutationObserver(() => { if (document.body.classList.contains("nav-open")) finish("menu"); request(); });
   sections.forEach(section => { intersection.observe(section.trigger); resize.observe(section.element); });
+  const gallery = new MutationObserver(() => {
+    finish("filter");
+    intersection.disconnect(); resize.disconnect();
+    sections = collect();
+    sections.forEach(section => { intersection.observe(section.trigger); resize.observe(section.element); });
+    dirty = true; request();
+  });
+  const grid = document.querySelector(".projects-grid");
+  if (grid) gallery.observe(grid, { childList: true });
   menu.observe(document.body, { attributes: true, attributeFilter: ["class"] });
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onResize, { passive: true });
@@ -174,7 +214,7 @@ export function createConstructionCoordinator(overlay: SVGSVGElement, completed:
       disposed = true;
       cancelAnimationFrame(frame);
       finish("unmount");
-      intersection.disconnect(); resize.disconnect(); menu.disconnect();
+      intersection.disconnect(); resize.disconnect(); menu.disconnect(); gallery.disconnect();
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
       window.removeEventListener("hashchange", onHash);
